@@ -1,3 +1,6 @@
+"""Small helpful subroutines and classes"""
+
+
 import sys
 from random import randint
 from time import sleep
@@ -25,6 +28,34 @@ def print_jet(text):
         sys.stdout.flush()
         sleep(0.05)
     print("")
+
+
+def input_picky(prompt: str, options: list) -> str:
+    """Request input from the user, and loop if they give an answeer that isn't in options.
+    """
+    # Handle errors
+    # prompt not a string
+    if not isinstance(prompt, str):
+        raise TypeError("prompt must be a string")
+    # options not a list
+    if not isinstance(options, list):
+        raise TypeError("options must be a list")
+    # options contains non-list element
+    for element in options:
+        if not isinstance(element, str):
+            raise TypeError("options contains non-string element")
+    # options empty
+    if len(options) == 0:
+        raise ValueError("options must not be empty")
+
+    response = None
+
+    while response not in options:
+        response = input(prompt)
+        if response not in options:
+            print("Response isn't an option.  Please try again.")
+
+    return response
 
 
 class Character:  # Overall character architecture, may need to add more for enemies
